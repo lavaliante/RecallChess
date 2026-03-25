@@ -39,7 +39,7 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
         <SoundToggle />
       </div>
 
-      <div>
+      <div className="session-launcher-title">
         <p className="eyebrow">Chess Memory Trainer</p>
         <h1>RecallChess</h1>
         <p className="hero-copy quick-start-copy">
@@ -102,3 +102,4 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
     </section>
   );
 }
+

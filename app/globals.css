@@ -801,3 +801,14 @@ button:disabled,
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.session-launcher-title {
+  text-align: center;
+}
+
+.session-launcher-title .eyebrow,
+.session-launcher-title h1,
+.session-launcher-title .quick-start-copy {
+  margin-left: auto;
+  margin-right: auto;
+}
