@@ -140,6 +140,12 @@ export function ExercisePlayer({
   };
 
   const tryMove = (sourceSquare: string, targetSquare: string) => {
+    const moveIndex = game.history().length;
+
+    if (moveIndex >= exercise.moves.length) {
+      return false;
+    }
+
     const nextGame = new Chess(game.fen());
     const move = nextGame.move({
       from: sourceSquare,
@@ -432,3 +438,12 @@ export function ExercisePlayer({
     </div>
   );
 }
+
+
+
+
+
+
+
+
+

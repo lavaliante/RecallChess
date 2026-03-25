@@ -357,6 +357,12 @@ export function SessionTrainer({
   };
 
   const tryMove = (sourceSquare: string, targetSquare: string) => {
+    const moveIndex = game.history().length;
+
+    if (moveIndex >= currentExercise.moves.length) {
+      return false;
+    }
+
     const nextGame = new Chess(game.fen());
     const move = nextGame.move({
       from: sourceSquare,
@@ -634,3 +640,12 @@ export function SessionTrainer({
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
