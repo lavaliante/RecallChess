@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "title": "Italian Game Setup",
+    "category": "Italian Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5"]
+  },
+  {
+    "id": 2,
+    "title": "Italian Two Knights Intro",
+    "category": "Italian Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Nf6"]
+  },
+  {
+    "id": 3,
+    "title": "Italian c3 Build",
+    "category": "Italian Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "c3", "Nf6"]
+  },
+  {
+    "id": 4,
+    "title": "Italian d3 Shell",
+    "category": "Italian Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "d3", "Nf6"]
+  },
+  {
+    "id": 5,
+    "title": "Italian Center Break",
+    "category": "Italian Game",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "c3", "Nf6", "d4", "exd4", "cxd4", "Bb4+"]
+  },
+  {
+    "id": 6,
+    "title": "Ruy Lopez Main Start",
+    "category": "Ruy Lopez",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6"]
+  },
+  {
+    "id": 7,
+    "title": "Ruy Lopez Berlin Intro",
+    "category": "Ruy Lopez",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "Nf6"]
+  },
+  {
+    "id": 8,
+    "title": "Ruy Lopez Morphy Step",
+    "category": "Ruy Lopez",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6", "Ba4", "Nf6"]
+  },
+  {
+    "id": 9,
+    "title": "Ruy Lopez Steinitz Shell",
+    "category": "Ruy Lopez",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6", "Ba4", "d6"]
+  },
+  {
+    "id": 10,
+    "title": "Ruy Lopez Closed Shape",
+    "category": "Ruy Lopez",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6", "Ba4", "Nf6", "O-O", "Be7", "Re1", "b5", "Bb3", "d6"]
+  },
+  {
+    "id": 11,
+    "title": "Queen's Gambit Declined Start",
+    "category": "Queen's Gambit",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "e6"]
+  },
+  {
+    "id": 12,
+    "title": "Queen's Gambit Slav Start",
+    "category": "Queen's Gambit",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "c6"]
+  },
+  {
+    "id": 13,
+    "title": "Queen's Gambit Development",
+    "category": "Queen's Gambit",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "e6", "Nc3", "Nf6"]
+  },
+  {
+    "id": 14,
+    "title": "Queen's Gambit Orthodox",
+    "category": "Queen's Gambit",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "e6", "Nf3", "Nf6", "Nc3", "Be7"]
+  },
+  {
+    "id": 15,
+    "title": "Queen's Gambit Main Line",
+    "category": "Queen's Gambit",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "e6", "Nc3", "Nf6", "Bg5", "Be7", "e3", "O-O", "Nf3"]
+  },
+  {
+    "id": 16,
+    "title": "London Basics",
+    "category": "London System",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "Nf3", "Nf6", "Bf4", "e6"]
+  },
+  {
+    "id": 17,
+    "title": "London King's Fianchetto",
+    "category": "London System",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "Nf3", "g6", "Bf4", "Bg7"]
+  },
+  {
+    "id": 18,
+    "title": "London Solid Center",
+    "category": "London System",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "Nf3", "Nf6", "Bf4", "e6", "e3", "c5"]
+  },
+  {
+    "id": 19,
+    "title": "London with c3",
+    "category": "London System",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "Nf3", "e6", "Bf4", "d5", "e3", "c5", "c3"]
+  },
+  {
+    "id": 20,
+    "title": "London Classical Setup",
+    "category": "London System",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "Nf3", "Nf6", "Bf4", "e6", "e3", "c5", "c3", "Nc6", "Nbd2", "Bd6"]
+  },
+  {
+    "id": 21,
+    "title": "Sicilian Open Start",
+    "category": "Sicilian Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "c5", "Nf3", "d6"]
+  },
+  {
+    "id": 22,
+    "title": "Sicilian Classical Start",
+    "category": "Sicilian Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "c5", "Nf3", "Nc6"]
+  },
+  {
+    "id": 23,
+    "title": "Sicilian Najdorf Shape",
+    "category": "Sicilian Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "c5", "Nf3", "d6", "d4", "cxd4", "Nxd4", "Nf6"]
+  },
+  {
+    "id": 24,
+    "title": "Sicilian Dragon Hint",
+    "category": "Sicilian Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "c5", "Nf3", "Nc6", "d4", "cxd4", "Nxd4", "g6"]
+  },
+  {
+    "id": 25,
+    "title": "Sicilian English Attack Setup",
+    "category": "Sicilian Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "c5", "Nf3", "d6", "d4", "cxd4", "Nxd4", "Nf6", "Nc3", "a6", "Be3", "e6", "f3"]
+  },
+  {
+    "id": 26,
+    "title": "Caro-Kann Main Start",
+    "category": "Caro-Kann",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "c6", "d4", "d5"]
+  },
+  {
+    "id": 27,
+    "title": "Caro-Kann Two Knights Start",
+    "category": "Caro-Kann",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "c6", "Nc3", "d5"]
+  },
+  {
+    "id": 28,
+    "title": "Caro-Kann Classical Shape",
+    "category": "Caro-Kann",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "c6", "d4", "d5", "Nc3", "dxe4", "Nxe4", "Bf5"]
+  },
+  {
+    "id": 29,
+    "title": "Caro-Kann Smyslov Hint",
+    "category": "Caro-Kann",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "c6", "d4", "d5", "Nd2", "dxe4", "Nxe4", "Nd7"]
+  },
+  {
+    "id": 30,
+    "title": "Caro-Kann Long Line",
+    "category": "Caro-Kann",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "c6", "d4", "d5", "Nc3", "dxe4", "Nxe4", "Bf5", "Ng3", "Bg6", "h4", "h6"]
+  },
+  {
+    "id": 31,
+    "title": "French Defense Start",
+    "category": "French Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e6", "d4", "d5"]
+  },
+  {
+    "id": 32,
+    "title": "French Classical Start",
+    "category": "French Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e6", "d4", "d5", "Nc3", "Nf6"]
+  },
+  {
+    "id": 33,
+    "title": "French Winawer Intro",
+    "category": "French Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e6", "d4", "d5", "Nc3", "Bb4"]
+  },
+  {
+    "id": 34,
+    "title": "French Exchange Build",
+    "category": "French Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e6", "d4", "d5", "Nd2", "c5", "exd5", "exd5"]
+  },
+  {
+    "id": 35,
+    "title": "French Advance Pressure",
+    "category": "French Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "e6", "d4", "d5", "Nc3", "Nf6", "Bg5", "Be7", "e5", "Nfd7", "h4"]
+  },
+  {
+    "id": 36,
+    "title": "English Symmetrical Start",
+    "category": "English Opening",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["c4", "c5", "Nc3", "Nc6"]
+  },
+  {
+    "id": 37,
+    "title": "English Reversed Sicilian",
+    "category": "English Opening",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["c4", "e5", "Nc3", "Nc6"]
+  },
+  {
+    "id": 38,
+    "title": "English Central Tension",
+    "category": "English Opening",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["c4", "e5", "Nc3", "Nf6", "g3", "d5", "cxd5", "Nxd5"]
+  },
+  {
+    "id": 39,
+    "title": "English Fianchetto Shape",
+    "category": "English Opening",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["c4", "c5", "Nc3", "Nc6", "g3", "g6", "Bg2", "Bg7"]
+  },
+  {
+    "id": 40,
+    "title": "English Four Knights",
+    "category": "English Opening",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["c4", "e5", "Nc3", "Nf6", "g3", "d5", "cxd5", "Nxd5", "Bg2", "Nb6", "Nf3", "Nc6"]
+  },
+  {
+    "id": 41,
+    "title": "Scotch Main Start",
+    "category": "Scotch Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4"]
+  },
+  {
+    "id": 42,
+    "title": "Scotch Schmidt Start",
+    "category": "Scotch Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "Nxd4"]
+  },
+  {
+    "id": 43,
+    "title": "Scotch Classical Shape",
+    "category": "Scotch Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Bc5"]
+  },
+  {
+    "id": 44,
+    "title": "Scotch Four Knights Idea",
+    "category": "Scotch Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Nf6"]
+  },
+  {
+    "id": 45,
+    "title": "Scotch Development Line",
+    "category": "Scotch Game",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Bc5", "Nb3", "Bb6", "Nc3", "Nf6"]
+  },
+  {
+    "id": 46,
+    "title": "Vienna Game Start",
+    "category": "Vienna Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nc3", "Nf6"]
+  },
+  {
+    "id": 47,
+    "title": "Vienna with Nc6",
+    "category": "Vienna Game",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nc3", "Nc6"]
+  },
+  {
+    "id": 48,
+    "title": "Vienna Gambit Hint",
+    "category": "Vienna Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nc3", "Nf6", "f4", "d5"]
+  },
+  {
+    "id": 49,
+    "title": "Vienna Quiet Build",
+    "category": "Vienna Game",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nc3", "Nc6", "Bc4", "Nf6", "d3", "Bc5"]
+  },
+  {
+    "id": 50,
+    "title": "Vienna Gambit Long Line",
+    "category": "Vienna Game",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "e5", "Nc3", "Nf6", "f4", "d5", "fxe5", "Nxe4", "Nf3", "Be7", "d4", "O-O"]
+  },
+  {
+    "id": 51,
+    "title": "Slav Defense Start",
+    "category": "Slav Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "c6"]
+  },
+  {
+    "id": 52,
+    "title": "Slav Developing Start",
+    "category": "Slav Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "Nf3", "Nf6", "c4", "c6"]
+  },
+  {
+    "id": 53,
+    "title": "Slav Main Line",
+    "category": "Slav Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "c6", "Nc3", "Nf6"]
+  },
+  {
+    "id": 54,
+    "title": "Slav Accepted Shape",
+    "category": "Slav Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "c6", "Nf3", "Nf6", "Nc3", "dxc4"]
+  },
+  {
+    "id": 55,
+    "title": "Slav Advance Plan",
+    "category": "Slav Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "d5", "c4", "c6", "Nc3", "Nf6", "Nf3", "dxc4", "a4", "Bf5", "Ne5"]
+  },
+  {
+    "id": 56,
+    "title": "Scandinavian Main Line",
+    "category": "Scandinavian Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "d5", "exd5", "Qxd5"]
+  },
+  {
+    "id": 57,
+    "title": "Scandinavian Modern Start",
+    "category": "Scandinavian Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "d5", "exd5", "Nf6"]
+  },
+  {
+    "id": 58,
+    "title": "Scandinavian Qa5 Line",
+    "category": "Scandinavian Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "d5", "exd5", "Qxd5", "Nc3", "Qa5"]
+  },
+  {
+    "id": 59,
+    "title": "Scandinavian Marshall Shape",
+    "category": "Scandinavian Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "d5", "exd5", "Nf6", "d4", "Nxd5"]
+  },
+  {
+    "id": 60,
+    "title": "Scandinavian Development",
+    "category": "Scandinavian Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "d5", "exd5", "Nf6", "d4", "Bg4", "Nf3", "Nxd5", "Be2", "e6", "O-O"]
+  },
+  {
+    "id": 61,
+    "title": "King's Indian Setup",
+    "category": "King's Indian Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "g6"]
+  },
+  {
+    "id": 62,
+    "title": "King's Indian Main Build",
+    "category": "King's Indian Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "g6", "Nc3", "Bg7", "e4", "d6"]
+  },
+  {
+    "id": 63,
+    "title": "King's Indian Classical",
+    "category": "King's Indian Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "g6", "Nc3", "Bg7", "e4", "d6", "Nf3", "O-O", "Be2", "e5", "O-O", "Nc6"]
+  },
+  {
+    "id": 64,
+    "title": "King's Indian Bayonet Hint",
+    "category": "King's Indian Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "g6", "Nc3", "Bg7", "e4", "d6", "f3", "O-O", "Be3", "e5", "d5"]
+  },
+  {
+    "id": 65,
+    "title": "King's Indian Space Grab",
+    "category": "King's Indian Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "g6", "Nc3", "Bg7", "e4", "d6", "Nf3", "O-O", "Be2", "e5", "Be3", "Nc6", "d5", "Ne7"]
+  },
+  {
+    "id": 66,
+    "title": "Nimzo-Indian Start",
+    "category": "Nimzo-Indian",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4"]
+  },
+  {
+    "id": 67,
+    "title": "Nimzo-Indian Rubinstein Shape",
+    "category": "Nimzo-Indian",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4", "e3", "O-O"]
+  },
+  {
+    "id": 68,
+    "title": "Nimzo-Indian Classical",
+    "category": "Nimzo-Indian",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4", "e3", "O-O", "Bd3", "d5", "Nf3", "c5"]
+  },
+  {
+    "id": 69,
+    "title": "Nimzo-Indian Flexible",
+    "category": "Nimzo-Indian",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4", "e3", "O-O", "Ne2", "d5", "a3", "Be7"]
+  },
+  {
+    "id": 70,
+    "title": "Nimzo-Indian Queen Recapture",
+    "category": "Nimzo-Indian",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4", "Qc2", "O-O", "a3", "Bxc3+", "Qxc3"]
+  },
+  {
+    "id": 71,
+    "title": "Pirc Defense Main Setup",
+    "category": "Pirc Defense",
+    "difficulty": "Beginner",
+    "sourceType": "opening",
+    "moves": ["e4", "d6", "d4", "Nf6", "Nc3", "g6"]
+  },
+  {
+    "id": 72,
+    "title": "Pirc Development",
+    "category": "Pirc Defense",
+    "difficulty": "Intermediate",
+    "sourceType": "opening",
+    "moves": ["e4", "d6", "d4", "Nf6", "Nc3", "g6", "Nf3", "Bg7"]
+  },
+  {
+    "id": 73,
+    "title": "Pirc Classical",
+    "category": "Pirc Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "d6", "d4", "Nf6", "Nc3", "g6", "Nf3", "Bg7", "Be2", "O-O", "O-O", "c6"]
+  },
+  {
+    "id": 74,
+    "title": "Pirc Austrian Hint",
+    "category": "Pirc Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "d6", "d4", "Nf6", "Nc3", "g6", "f4", "Bg7", "Nf3", "O-O", "Bd3"]
+  },
+  {
+    "id": 75,
+    "title": "Pirc 150 Attack Shape",
+    "category": "Pirc Defense",
+    "difficulty": "Advanced",
+    "sourceType": "opening",
+    "moves": ["e4", "d6", "d4", "Nf6", "Nc3", "g6", "Be3", "Bg7", "Qd2", "O-O", "O-O-O", "c6"]
+  },
+  {
+    "id": 76,
+    "title": "Scholar Motif",
+    "category": "Tactical Short Sequences",
+    "difficulty": "Beginner",
+    "sourceType": "tactic",
+    "moves": ["e4", "e5", "Bc4", "Nc6", "Qh5", "Nf6"]
+  },
+  {
+    "id": 77,
+    "title": "Fried Liver Start",
+    "category": "Tactical Short Sequences",
+    "difficulty": "Intermediate",
+    "sourceType": "tactic",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Nf6", "Ng5", "d5", "exd5", "Nxd5"]
+  },
+  {
+    "id": 78,
+    "title": "Fried Liver Shot",
+    "category": "Tactical Short Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "tactic",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Nf6", "Ng5", "d5", "exd5", "Nxd5", "Nxf7", "Kxf7", "Qf3+"]
+  },
+  {
+    "id": 79,
+    "title": "Evans Gambit Race",
+    "category": "Tactical Short Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "tactic",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "b4", "Bxb4", "c3", "Ba5", "d4", "exd4", "O-O"]
+  },
+  {
+    "id": 80,
+    "title": "Italian Tactical Center",
+    "category": "Tactical Short Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "tactic",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "c3", "Nf6", "d4", "exd4", "O-O", "Nxe4", "Re1"]
+  },
+  {
+    "id": 81,
+    "title": "Classical Center Build",
+    "category": "Classical Game Fragments",
+    "difficulty": "Beginner",
+    "sourceType": "classical",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "c3"]
+  },
+  {
+    "id": 82,
+    "title": "Classical Queen Pawn Shell",
+    "category": "Classical Game Fragments",
+    "difficulty": "Intermediate",
+    "sourceType": "classical",
+    "moves": ["d4", "Nf6", "c4", "e6", "Nc3", "Bb4", "e3", "O-O"]
+  },
+  {
+    "id": 83,
+    "title": "Classical Open Center",
+    "category": "Classical Game Fragments",
+    "difficulty": "Advanced",
+    "sourceType": "classical",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bc4", "Bc5", "c3", "Nf6", "d4", "exd4", "cxd4", "Bb4+", "Nc3"]
+  },
+  {
+    "id": 84,
+    "title": "Classical Ruy Expansion",
+    "category": "Classical Game Fragments",
+    "difficulty": "Advanced",
+    "sourceType": "classical",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6", "Ba4", "Nf6", "O-O", "Be7", "Re1", "b5", "Bb3", "O-O"]
+  },
+  {
+    "id": 85,
+    "title": "Classical Queen's Gambit Fragment",
+    "category": "Classical Game Fragments",
+    "difficulty": "Advanced",
+    "sourceType": "classical",
+    "moves": ["d4", "d5", "c4", "e6", "Nc3", "Nf6", "Bg5", "Be7", "e3", "O-O", "Nf3", "Nbd7", "Rc1"]
+  },
+  {
+    "id": 86,
+    "title": "Early Queen Exchange",
+    "category": "Endgame Mini-Sequences",
+    "difficulty": "Beginner",
+    "sourceType": "endgame",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Nxd4", "Qxd4"]
+  },
+  {
+    "id": 87,
+    "title": "Simplified Center",
+    "category": "Endgame Mini-Sequences",
+    "difficulty": "Intermediate",
+    "sourceType": "endgame",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Nxd4", "Qxd4", "d6", "Nc3"]
+  },
+  {
+    "id": 88,
+    "title": "Queenless Middlegame",
+    "category": "Endgame Mini-Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "endgame",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "d4", "exd4", "Nxd4", "Nxd4", "Qxd4", "d6", "Nc3", "Nf6", "Bg5", "Be7", "O-O-O"]
+  },
+  {
+    "id": 89,
+    "title": "Rook File Transition",
+    "category": "Endgame Mini-Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "endgame",
+    "moves": ["d4", "d5", "c4", "dxc4", "Nf3", "Nf6", "e3", "e6", "Bxc4", "c5", "O-O", "a6"]
+  },
+  {
+    "id": 90,
+    "title": "Open File Exchanges",
+    "category": "Endgame Mini-Sequences",
+    "difficulty": "Advanced",
+    "sourceType": "endgame",
+    "moves": ["e4", "e5", "Nf3", "Nc6", "Bb5", "a6", "Bxc6", "dxc6", "d4", "exd4", "Qxd4", "Qxd4", "Nxd4"]
+  }
+]
