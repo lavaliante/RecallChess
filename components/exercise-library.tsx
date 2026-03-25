@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ExerciseCard } from "@/components/exercise-card";
+import { SoundButton } from "@/components/sound-button";
 import type { Exercise } from "@/lib/types";
 
 type ExerciseLibraryProps = {
@@ -24,22 +25,28 @@ function matchesExercise(exercise: Exercise, query: string) {
 
 export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
   const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
   const normalizedSearch = search.trim().toLowerCase();
 
   const filteredExercises = useMemo(() => {
-    if (!normalizedSearch) {
-      return exercises;
-    }
+    return exercises.filter((exercise) => {
+      const matchesSearch = !normalizedSearch || matchesExercise(exercise, normalizedSearch);
+      const matchesCategory = !categoryFilter || exercise.category === categoryFilter;
+      return matchesSearch && matchesCategory;
+    });
+  }, [categoryFilter, exercises, normalizedSearch]);
 
-    return exercises.filter((exercise) => matchesExercise(exercise, normalizedSearch));
-  }, [exercises, normalizedSearch]);
+  const clearFilters = () => {
+    setSearch("");
+    setCategoryFilter(null);
+  };
 
   return (
     <section className="section-block">
       <div className="section-heading exercise-library-head">
         <div>
           <h2>Exercise List</h2>
-          <p>Search by title, opening, difficulty, or move text.</p>
+          <p>Search by title, opening, difficulty, or move text. Click a category to filter.</p>
         </div>
         <div className="searchbox-wrap">
           <label className="sr-only" htmlFor="exercise-search">
@@ -53,16 +60,28 @@ export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
             type="search"
             value={search}
           />
-          <span className="search-meta">
-            {filteredExercises.length} of {exercises.length} exercises
-          </span>
+          <div className="search-toolbar">
+            <span className="search-meta">
+              {filteredExercises.length} of {exercises.length} exercises
+            </span>
+            {categoryFilter ? <span className="badge">Category: {categoryFilter}</span> : null}
+            {search || categoryFilter ? (
+              <SoundButton className="button-ghost search-clear" onClick={clearFilters} type="button">
+                Clear Filters
+              </SoundButton>
+            ) : null}
+          </div>
         </div>
       </div>
 
       {filteredExercises.length > 0 ? (
         <div className="exercise-grid">
           {filteredExercises.map((exercise) => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
+            <ExerciseCard
+              exercise={exercise}
+              key={exercise.id}
+              onCategoryClick={setCategoryFilter}
+            />
           ))}
         </div>
       ) : (

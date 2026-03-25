@@ -16,3 +16,36 @@ export type StoredProgress = {
 export type ProgressSnapshot = StoredProgress & {
   totalExercises: number;
 };
+
+export type SessionExerciseSnapshot = {
+  id: number;
+  title: string;
+  category: string;
+  difficulty: Exercise["difficulty"];
+};
+
+export type SessionHistoryRecord = {
+  id: string;
+  completedAt: string;
+  difficulty: Exercise["difficulty"];
+  durationMinutes: 1 | 2 | 5;
+  totalExercises: number;
+  correct: number;
+  wrong: number;
+  unfinished: number;
+  accuracy: number;
+  bestStreak?: number;
+  wrongExerciseIds: number[];
+  unfinishedExerciseIds: number[];
+  wrongExercises?: SessionExerciseSnapshot[];
+  unfinishedExercises?: SessionExerciseSnapshot[];
+};
+
+export type SessionHistorySummary = {
+  totalSessions: number;
+  totalExercises: number;
+  correct: number;
+  wrong: number;
+  unfinished: number;
+  accuracy: number;
+};

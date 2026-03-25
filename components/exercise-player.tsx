@@ -19,6 +19,7 @@ import type { Exercise } from "@/lib/types";
 type ExercisePlayerProps = {
   exercise: Exercise;
   nextExerciseId: number | null;
+  nextExerciseHref?: string | null;
   timedMemorization?: boolean;
 };
 
@@ -46,6 +47,7 @@ function getMemorizationTimeSeconds(difficulty: string, halfMoves: number): numb
 export function ExercisePlayer({
   exercise,
   nextExerciseId,
+  nextExerciseHref = null,
   timedMemorization = true,
 }: ExercisePlayerProps) {
   const router = useRouter();
@@ -205,6 +207,11 @@ export function ExercisePlayer({
     }
 
     if (isCorrect) {
+      if (nextExerciseHref) {
+        router.push(nextExerciseHref);
+        return;
+      }
+
       router.push(nextExerciseId ? `/exercise/${nextExerciseId}` : "/exercises");
       return;
     }

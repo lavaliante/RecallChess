@@ -12,7 +12,8 @@ import {
   getExpectedFenFromMoves,
   normalizeFenForComparison,
 } from "@/lib/chess";
-import type { Exercise } from "@/lib/types";
+import { addSessionHistoryRecord } from "@/lib/session-history";
+import type { Exercise, SessionExerciseSnapshot } from "@/lib/types";
 
 type SessionTrainerProps = {
   difficulty: Exercise["difficulty"];
@@ -78,6 +79,15 @@ function pickNextExercise(exercises: Exercise[], previousId: number | null): Exe
   return candidate ?? shuffled[0];
 }
 
+function toExerciseSnapshot(exercise: Exercise): SessionExerciseSnapshot {
+  return {
+    id: exercise.id,
+    title: exercise.title,
+    category: exercise.category,
+    difficulty: exercise.difficulty,
+  };
+}
+
 export function SessionTrainer({
   difficulty,
   durationMinutes,
@@ -112,7 +122,11 @@ export function SessionTrainer({
   const currentExerciseRef = useRef(currentExercise);
   const currentExerciseCheckedRef = useRef(false);
   const sessionEndedRef = useRef(false);
+  const sessionSavedRef = useRef(false);
   const resultTimeoutRef = useRef<number | null>(null);
+  const summaryRef = useRef(summary);
+  const wrongExercisesRef = useRef<SessionExerciseSnapshot[]>([]);
+  const unfinishedExercisesRef = useRef<SessionExerciseSnapshot[]>([]);
 
   const formattedMoves = useMemo(
     () => formatMovePairs(currentExercise.moves),
@@ -126,6 +140,10 @@ export function SessionTrainer({
   useEffect(() => {
     currentExerciseRef.current = currentExercise;
   }, [currentExercise]);
+
+  useEffect(() => {
+    summaryRef.current = summary;
+  }, [summary]);
 
   useEffect(() => {
     sessionDeadlineRef.current = Date.now() + durationSeconds * 1000;
@@ -149,14 +167,27 @@ export function SessionTrainer({
   const finishExercise = useCallback((outcome: "correct" | "wrong" | "unfinished") => {
     currentExerciseCheckedRef.current = true;
 
+    if (outcome === "wrong") {
+      wrongExercisesRef.current = [
+        ...wrongExercisesRef.current,
+        toExerciseSnapshot(currentExerciseRef.current),
+      ];
+    }
+
+    if (outcome === "unfinished") {
+      unfinishedExercisesRef.current = [
+        ...unfinishedExercisesRef.current,
+        toExerciseSnapshot(currentExerciseRef.current),
+      ];
+    }
+
     setSummary((current) => {
       const attempted = current.attempted + 1;
       const correct = current.correct + (outcome === "correct" ? 1 : 0);
       const wrong = current.wrong + (outcome === "wrong" ? 1 : 0);
       const unfinished = current.unfinished + (outcome === "unfinished" ? 1 : 0);
       const nextStreak = outcome === "correct" ? current.currentStreak + 1 : 0;
-
-      return {
+      const nextSummary = {
         attempted,
         correct,
         wrong,
@@ -165,6 +196,9 @@ export function SessionTrainer({
         bestStreak: Math.max(current.bestStreak, nextStreak),
         totalMoveCount: current.totalMoveCount + currentExerciseRef.current.moves.length,
       };
+
+      summaryRef.current = nextSummary;
+      return nextSummary;
     });
   }, []);
 
@@ -271,6 +305,34 @@ export function SessionTrainer({
       }
     };
   }, [currentExercise.id, exercises, loadExercise, sessionEnded, stage]);
+
+  useEffect(() => {
+    if (!sessionEnded || sessionSavedRef.current) {
+      return;
+    }
+
+    const finalSummary = summaryRef.current;
+    const totalExercises = finalSummary.attempted;
+
+    addSessionHistoryRecord({
+      id: `session_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      completedAt: new Date().toISOString(),
+      difficulty,
+      durationMinutes,
+      totalExercises,
+      correct: finalSummary.correct,
+      wrong: finalSummary.wrong,
+      unfinished: finalSummary.unfinished,
+      accuracy: totalExercises === 0 ? 0 : Math.round((finalSummary.correct / totalExercises) * 100),
+      bestStreak: finalSummary.bestStreak,
+      wrongExerciseIds: wrongExercisesRef.current.map((exercise) => exercise.id),
+      unfinishedExerciseIds: unfinishedExercisesRef.current.map((exercise) => exercise.id),
+      wrongExercises: wrongExercisesRef.current,
+      unfinishedExercises: unfinishedExercisesRef.current,
+    });
+
+    sessionSavedRef.current = true;
+  }, [difficulty, durationMinutes, sessionEnded]);
 
   useEffect(() => {
     return () => {
@@ -434,6 +496,9 @@ export function SessionTrainer({
             <SoundLink className="button-primary difficulty-button" href="/">
               Start Another Session
             </SoundLink>
+            <SoundLink className="button-secondary difficulty-button" href="/history">
+              View History
+            </SoundLink>
             <SoundLink className="button-ghost difficulty-button" href="/exercises">
               Browse Exercise Library
             </SoundLink>
@@ -561,3 +626,4 @@ export function SessionTrainer({
     </div>
   );
 }
+

@@ -3,13 +3,24 @@ import type { Exercise } from "@/lib/types";
 
 type ExerciseCardProps = {
   exercise: Exercise;
+  onCategoryClick?: (category: string) => void;
 };
 
-export function ExerciseCard({ exercise }: ExerciseCardProps) {
+export function ExerciseCard({ exercise, onCategoryClick }: ExerciseCardProps) {
   return (
     <article className="exercise-card panel">
       <div className="badge-row">
-        <span className="badge">{exercise.category}</span>
+        {onCategoryClick ? (
+          <button
+            className="badge badge-button"
+            onClick={() => onCategoryClick(exercise.category)}
+            type="button"
+          >
+            {exercise.category}
+          </button>
+        ) : (
+          <span className="badge">{exercise.category}</span>
+        )}
         <span className="badge">{exercise.difficulty}</span>
       </div>
       <div>
@@ -23,4 +34,3 @@ export function ExerciseCard({ exercise }: ExerciseCardProps) {
     </article>
   );
 }
-
