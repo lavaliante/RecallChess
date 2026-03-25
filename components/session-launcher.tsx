@@ -101,6 +101,3 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
     </section>
   );
 }
-
-
-

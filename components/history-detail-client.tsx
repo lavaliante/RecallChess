@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { SoundLink } from "@/components/sound-link";
+import { SoundToggle } from "@/components/sound-toggle";
 import { getSessionHistoryRecord } from "@/lib/session-history";
 import type { SessionExerciseSnapshot, SessionHistoryRecord } from "@/lib/types";
 
@@ -77,11 +78,14 @@ export function HistoryDetailClient({ sessionId }: HistoryDetailClientProps) {
           <SoundLink className="button-ghost" href="/history">
             Back to History
           </SoundLink>
-          {wrongExercises.length > 0 ? (
-            <SoundLink className="button-primary" href={`/review/${session.id}/0`}>
-              Review Mistakes
-            </SoundLink>
-          ) : null}
+          <div className="button-row">
+            {wrongExercises.length > 0 ? (
+              <SoundLink className="button-primary" href={`/review/${session.id}/0`}>
+                Review Mistakes
+              </SoundLink>
+            ) : null}
+            <SoundToggle />
+          </div>
         </div>
         <p className="eyebrow">Session Details</p>
         <h1>{formatCompletedAt(session.completedAt)}</h1>
@@ -119,4 +123,3 @@ export function HistoryDetailClient({ sessionId }: HistoryDetailClientProps) {
     </main>
   );
 }
-

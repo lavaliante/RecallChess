@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { SoundLink } from "@/components/sound-link";
+import { SoundToggle } from "@/components/sound-toggle";
 import { loadSessionHistory, getSessionHistorySummary } from "@/lib/session-history";
 import type { SessionHistoryRecord } from "@/lib/types";
 
@@ -31,9 +32,12 @@ export function HistoryPageClient() {
           <SoundLink className="button-ghost" href="/">
             Back Home
           </SoundLink>
-          <SoundLink className="button-secondary" href="/exercises">
-            Exercise Library
-          </SoundLink>
+          <div className="button-row">
+            <SoundLink className="button-secondary" href="/exercises">
+              Exercise Library
+            </SoundLink>
+            <SoundToggle />
+          </div>
         </div>
         <p className="eyebrow">Session History</p>
         <h1>Past Sessions</h1>
@@ -119,4 +123,3 @@ export function HistoryPageClient() {
     </main>
   );
 }
-

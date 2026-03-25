@@ -819,3 +819,16 @@ button:disabled,
   margin-right: auto;
 }
 
+
+
+.sound-toggle-button {
+  min-width: 44px;
+  padding: 0.65rem;
+}
+
+.sound-toggle-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
+}
+
