@@ -26,19 +26,22 @@ function matchesExercise(exercise: Exercise, query: string) {
 export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+  const [difficultyFilter, setDifficultyFilter] = useState<Exercise["difficulty"] | null>(null);
   const normalizedSearch = search.trim().toLowerCase();
 
   const filteredExercises = useMemo(() => {
     return exercises.filter((exercise) => {
       const matchesSearch = !normalizedSearch || matchesExercise(exercise, normalizedSearch);
       const matchesCategory = !categoryFilter || exercise.category === categoryFilter;
-      return matchesSearch && matchesCategory;
+      const matchesDifficulty = !difficultyFilter || exercise.difficulty === difficultyFilter;
+      return matchesSearch && matchesCategory && matchesDifficulty;
     });
-  }, [categoryFilter, exercises, normalizedSearch]);
+  }, [categoryFilter, difficultyFilter, exercises, normalizedSearch]);
 
   const clearFilters = () => {
     setSearch("");
     setCategoryFilter(null);
+    setDifficultyFilter(null);
   };
 
   return (
@@ -46,7 +49,7 @@ export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
       <div className="section-heading exercise-library-head">
         <div>
           <h2>Exercise List</h2>
-          <p>Search by title, opening, difficulty, or move text. Click a category to filter.</p>
+          <p>Search by title, opening, difficulty, or move text. Click a category or difficulty to filter.</p>
         </div>
         <div className="searchbox-wrap">
           <label className="sr-only" htmlFor="exercise-search">
@@ -65,7 +68,8 @@ export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
               {filteredExercises.length} of {exercises.length} exercises
             </span>
             {categoryFilter ? <span className="badge">Category: {categoryFilter}</span> : null}
-            {search || categoryFilter ? (
+            {difficultyFilter ? <span className="badge">Difficulty: {difficultyFilter}</span> : null}
+            {search || categoryFilter || difficultyFilter ? (
               <SoundButton className="button-ghost search-clear" onClick={clearFilters} type="button">
                 Clear Filters
               </SoundButton>
@@ -81,6 +85,7 @@ export function ExerciseLibrary({ exercises }: ExerciseLibraryProps) {
               exercise={exercise}
               key={exercise.id}
               onCategoryClick={setCategoryFilter}
+              onDifficultyClick={setDifficultyFilter}
             />
           ))}
         </div>

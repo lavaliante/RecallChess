@@ -4,9 +4,14 @@ import type { Exercise } from "@/lib/types";
 type ExerciseCardProps = {
   exercise: Exercise;
   onCategoryClick?: (category: string) => void;
+  onDifficultyClick?: (difficulty: Exercise["difficulty"]) => void;
 };
 
-export function ExerciseCard({ exercise, onCategoryClick }: ExerciseCardProps) {
+export function ExerciseCard({
+  exercise,
+  onCategoryClick,
+  onDifficultyClick,
+}: ExerciseCardProps) {
   return (
     <article className="exercise-card panel">
       <div className="badge-row">
@@ -21,7 +26,17 @@ export function ExerciseCard({ exercise, onCategoryClick }: ExerciseCardProps) {
         ) : (
           <span className="badge">{exercise.category}</span>
         )}
-        <span className="badge">{exercise.difficulty}</span>
+        {onDifficultyClick ? (
+          <button
+            className="badge badge-button"
+            onClick={() => onDifficultyClick(exercise.difficulty)}
+            type="button"
+          >
+            {exercise.difficulty}
+          </button>
+        ) : (
+          <span className="badge">{exercise.difficulty}</span>
+        )}
       </div>
       <div>
         <h3>{exercise.title}</h3>

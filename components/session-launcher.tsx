@@ -34,8 +34,7 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
 
   return (
     <section className="hero-card quick-start-card session-launcher-card">
-      <div className="button-row quick-start-topbar">
-        <span className="badge">Timed Sessions</span>
+      <div className="button-row quick-start-topbar session-launcher-topbar">
         <SoundToggle />
       </div>
 
@@ -102,4 +101,5 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
     </section>
   );
 }
+
 

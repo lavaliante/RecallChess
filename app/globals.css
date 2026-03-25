@@ -802,7 +802,13 @@ button:disabled,
   }
 }
 
+.session-launcher-topbar {
+  justify-content: flex-end;
+}
+
 .session-launcher-title {
+  display: grid;
+  justify-items: center;
   text-align: center;
 }
 
@@ -812,3 +818,4 @@ button:disabled,
   margin-left: auto;
   margin-right: auto;
 }
+

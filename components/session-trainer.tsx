@@ -69,16 +69,6 @@ function shuffleExercises(list: Exercise[]): Exercise[] {
   return next;
 }
 
-function pickNextExercise(exercises: Exercise[], previousId: number | null): Exercise {
-  if (exercises.length === 1) {
-    return exercises[0];
-  }
-
-  const shuffled = shuffleExercises(exercises);
-  const candidate = shuffled.find((exercise) => exercise.id !== previousId);
-  return candidate ?? shuffled[0];
-}
-
 function toExerciseSnapshot(exercise: Exercise): SessionExerciseSnapshot {
   return {
     id: exercise.id,
@@ -95,15 +85,16 @@ export function SessionTrainer({
 }: SessionTrainerProps) {
   const { playMove, playSuccess, playError } = useSound();
   const durationSeconds = durationMinutes * 60;
-  const initialExercise = useMemo(() => pickNextExercise(exercises, null), [exercises]);
-  const [currentExercise, setCurrentExercise] = useState(initialExercise);
+  const shuffledExercises = useMemo(() => shuffleExercises(exercises), [exercises]);
+  const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
+  const currentExercise = shuffledExercises[currentExerciseIndex];
   const [stage, setStage] = useState<ExerciseStage>("notation");
   const [game, setGame] = useState(() => new Chess());
   const [currentFen, setCurrentFen] = useState(INITIAL_FEN);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean | null>(null);
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
   const [notationSecondsLeft, setNotationSecondsLeft] = useState(() =>
-    getMemorizationTimeSeconds(initialExercise.difficulty, initialExercise.moves.length),
+    getMemorizationTimeSeconds(currentExercise.difficulty, currentExercise.moves.length),
   );
   const [sessionSecondsLeft, setSessionSecondsLeft] = useState(durationSeconds);
   const [summary, setSummary] = useState<SessionSummary>({
@@ -116,6 +107,7 @@ export function SessionTrainer({
     totalMoveCount: 0,
   });
   const [sessionEnded, setSessionEnded] = useState(false);
+  const [endedBecausePoolFinished, setEndedBecausePoolFinished] = useState(false);
   const boardWrapperRef = useRef<HTMLDivElement | null>(null);
   const [boardWidth, setBoardWidth] = useState(320);
   const sessionDeadlineRef = useRef<number | null>(null);
@@ -149,20 +141,24 @@ export function SessionTrainer({
     sessionDeadlineRef.current = Date.now() + durationSeconds * 1000;
   }, [durationSeconds]);
 
-  const loadExercise = useCallback((exercise: Exercise) => {
-    const freshGame = new Chess();
-    currentExerciseRef.current = exercise;
-    currentExerciseCheckedRef.current = false;
-    setCurrentExercise(exercise);
-    setGame(freshGame);
-    setCurrentFen(freshGame.fen());
-    setStage("notation");
-    setIsCurrentCorrect(null);
-    setSelectedSquare(null);
-    setNotationSecondsLeft(
-      getMemorizationTimeSeconds(exercise.difficulty, exercise.moves.length),
-    );
-  }, []);
+  const loadExerciseByIndex = useCallback(
+    (exerciseIndex: number) => {
+      const exercise = shuffledExercises[exerciseIndex];
+      const freshGame = new Chess();
+      currentExerciseRef.current = exercise;
+      currentExerciseCheckedRef.current = false;
+      setCurrentExerciseIndex(exerciseIndex);
+      setGame(freshGame);
+      setCurrentFen(freshGame.fen());
+      setStage("notation");
+      setIsCurrentCorrect(null);
+      setSelectedSquare(null);
+      setNotationSecondsLeft(
+        getMemorizationTimeSeconds(exercise.difficulty, exercise.moves.length),
+      );
+    },
+    [shuffledExercises],
+  );
 
   const finishExercise = useCallback((outcome: "correct" | "wrong" | "unfinished") => {
     currentExerciseCheckedRef.current = true;
@@ -203,14 +199,18 @@ export function SessionTrainer({
   }, []);
 
   const endSession = useCallback(
-    (markCurrentAsUnfinished: boolean) => {
+    (markCurrentAsUnfinished: boolean, becausePoolFinished = false) => {
       if (sessionEndedRef.current) {
         return;
       }
 
       sessionEndedRef.current = true;
       setSessionEnded(true);
-      setSessionSecondsLeft(0);
+      setEndedBecausePoolFinished(becausePoolFinished);
+
+      if (!becausePoolFinished) {
+        setSessionSecondsLeft(0);
+      }
 
       if (resultTimeoutRef.current) {
         window.clearTimeout(resultTimeoutRef.current);
@@ -282,7 +282,7 @@ export function SessionTrainer({
     observer.observe(element);
 
     return () => observer.disconnect();
-  }, [sessionEnded, stage, currentExercise.id]);
+  }, [currentExercise.id, sessionEnded, stage]);
 
   useEffect(() => {
     if (sessionEnded || stage !== "result") {
@@ -294,8 +294,14 @@ export function SessionTrainer({
         return;
       }
 
-      const nextExercise = pickNextExercise(exercises, currentExerciseRef.current.id);
-      loadExercise(nextExercise);
+      const nextExerciseIndex = currentExerciseIndex + 1;
+
+      if (nextExerciseIndex >= shuffledExercises.length) {
+        endSession(false, true);
+        return;
+      }
+
+      loadExerciseByIndex(nextExerciseIndex);
     }, RESULT_DELAY_MS);
 
     return () => {
@@ -304,7 +310,7 @@ export function SessionTrainer({
         resultTimeoutRef.current = null;
       }
     };
-  }, [currentExercise.id, exercises, loadExercise, sessionEnded, stage]);
+  }, [currentExerciseIndex, endSession, loadExerciseByIndex, sessionEnded, shuffledExercises.length, stage]);
 
   useEffect(() => {
     if (!sessionEnded || sessionSavedRef.current) {
@@ -463,6 +469,7 @@ export function SessionTrainer({
             <span className="badge">{difficulty}</span>
             <span className="badge">{durationMinutes} min</span>
             <span className="badge">Accuracy {accuracy}%</span>
+            {endedBecausePoolFinished ? <span className="badge">All exercises used</span> : null}
           </div>
 
           <div className="summary-grid">
@@ -519,6 +526,7 @@ export function SessionTrainer({
             <span className="badge">{difficulty}</span>
             <span className="badge">{durationMinutes} min session</span>
             <span className="badge session-clock">{formatSessionClock(sessionSecondsLeft)}</span>
+            <span className="badge">{currentExerciseIndex + 1}/{shuffledExercises.length}</span>
           </div>
           <SoundToggle />
         </div>
@@ -626,4 +634,3 @@ export function SessionTrainer({
     </div>
   );
 }
-
