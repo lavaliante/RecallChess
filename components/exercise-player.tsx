@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Chess } from "chess.js";
-import { Chessboard } from "react-chessboard";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SoundButton } from "@/components/sound-button";
 import { SoundLink } from "@/components/sound-link";
 import { SoundToggle } from "@/components/sound-toggle";
 import { useSound } from "@/components/sound-provider";
+import { ChessboardPanel } from "@/components/chessboard-panel";
 import { loadProgress, saveProgress } from "@/lib/progress";
 import {
   formatMovePairs,
   getExpectedFenFromMoves,
   normalizeFenForComparison,
 } from "@/lib/chess";
+import { useRecallBoard } from "@/lib/use-recall-board";
 import type { Exercise } from "@/lib/types";
 
 type ExercisePlayerProps = {
@@ -25,8 +25,6 @@ type ExercisePlayerProps = {
 
 type ExerciseStage = "notation" | "recall" | "result";
 type ResultView = "notation" | "board" | "solution";
-
-const INITIAL_FEN = new Chess().fen();
 
 function getMemorizationTimeSeconds(difficulty: string, halfMoves: number): number {
   let seconds = 0;
@@ -62,25 +60,32 @@ export function ExercisePlayer({
     [exercise.difficulty, exercise.moves.length],
   );
 
-  const [game, setGame] = useState(() => new Chess());
-  const [currentFen, setCurrentFen] = useState(INITIAL_FEN);
   const [stage, setStage] = useState<ExerciseStage>("notation");
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [resultView, setResultView] = useState<ResultView>("board");
   const [countdownSeconds, setCountdownSeconds] = useState(memorizationSeconds);
-  const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
-  const boardWrapperRef = useRef<HTMLDivElement | null>(null);
-  const [boardWidth, setBoardWidth] = useState(320);
+
+  const {
+    currentFen,
+    customSquareStyles,
+    handleDrop,
+    handlePieceDragBegin,
+    handlePieceDragEnd,
+    handleSquareClick,
+    isDraggablePiece,
+    onPromotionCheck,
+    resetBoard,
+  } = useRecallBoard({
+    moves: exercise.moves,
+    enabled: stage === "recall",
+    onLegalMove: playMove,
+  });
 
   useEffect(() => {
-    const freshGame = new Chess();
-    setGame(freshGame);
-    setCurrentFen(freshGame.fen());
     setStage("notation");
     setIsCorrect(null);
     setResultView("board");
     setCountdownSeconds(memorizationSeconds);
-    setSelectedSquare(null);
 
     const progress = loadProgress();
     saveProgress({
@@ -107,69 +112,11 @@ export function ExercisePlayer({
     return () => window.clearTimeout(timeoutId);
   }, [countdownSeconds, stage, timedMemorization]);
 
-  useEffect(() => {
-    if (stage === "notation" || (stage === "result" && resultView === "notation")) {
-      return;
-    }
-
-    const element = boardWrapperRef.current;
-
-    if (!element) {
-      return;
-    }
-
-    const updateBoardWidth = () => {
-      setBoardWidth(Math.min(element.offsetWidth, 560));
-    };
-
-    updateBoardWidth();
-
-    const observer = new ResizeObserver(updateBoardWidth);
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [stage, resultView]);
-
-  const isOwnPieceSquare = (square: string, piece?: string) => {
-    if (!piece) {
-      return false;
-    }
-
-    const pieceColor = piece.charAt(0);
-    return pieceColor === game.turn();
-  };
-
-  const tryMove = (sourceSquare: string, targetSquare: string) => {
-    const moveIndex = game.history().length;
-
-    if (moveIndex >= exercise.moves.length) {
-      return false;
-    }
-
-    const nextGame = new Chess(game.fen());
-    const move = nextGame.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: "q",
-    });
-
-    if (!move) {
-      return false;
-    }
-
-    setGame(nextGame);
-    setCurrentFen(nextGame.fen());
-    setSelectedSquare(null);
-    playMove();
-    return true;
-  };
-
   const startRecallMode = () => {
     setStage("recall");
     setIsCorrect(null);
     setResultView("board");
     setCountdownSeconds(0);
-    setSelectedSquare(null);
   };
 
   const checkResult = () => {
@@ -180,7 +127,6 @@ export function ExercisePlayer({
     setIsCorrect(didMatch);
     setStage("result");
     setResultView("board");
-    setSelectedSquare(null);
 
     if (didMatch) {
       playSuccess();
@@ -222,59 +168,21 @@ export function ExercisePlayer({
       return;
     }
 
-    const freshGame = new Chess();
-    setGame(freshGame);
-    setCurrentFen(freshGame.fen());
+    resetBoard();
     setStage("notation");
     setIsCorrect(null);
     setResultView("board");
     setCountdownSeconds(memorizationSeconds);
-    setSelectedSquare(null);
   };
 
   const handleReset = () => {
-    const freshGame = new Chess();
-    setGame(freshGame);
-    setCurrentFen(freshGame.fen());
+    resetBoard();
     setIsCorrect(null);
     setResultView("board");
-    setSelectedSquare(null);
 
     if (stage === "result") {
       setStage("recall");
     }
-  };
-
-  const handleDrop = (sourceSquare: string, targetSquare: string) => {
-    if (stage !== "recall") {
-      return false;
-    }
-
-    return tryMove(sourceSquare, targetSquare);
-  };
-
-  const handleSquareClick = (square: string, piece?: string) => {
-    if (stage !== "recall") {
-      return;
-    }
-
-    if (selectedSquare) {
-      if (selectedSquare === square) {
-        setSelectedSquare(null);
-        return;
-      }
-
-      if (tryMove(selectedSquare, square)) {
-        return;
-      }
-    }
-
-    if (isOwnPieceSquare(square, piece)) {
-      setSelectedSquare(square);
-      return;
-    }
-
-    setSelectedSquare(null);
   };
 
   const handleStatusClick = (view: ResultView) => {
@@ -323,14 +231,6 @@ export function ExercisePlayer({
         opacity: 0.88,
       }
     : undefined;
-  const customSquareStyles =
-    stage === "recall" && selectedSquare
-      ? {
-          [selectedSquare]: {
-            boxShadow: "inset 0 0 0 4px rgba(34, 84, 61, 0.55)",
-          },
-        }
-      : undefined;
 
   return (
     <div className="exercise-flow">
@@ -401,20 +301,19 @@ export function ExercisePlayer({
             ) : null}
             <div className={`training-stage board-stage${isSolutionTab ? " solution-stage" : ""}`}>
               <div className="stage-box-content board-box-content">
-                <div className="board-wrapper" ref={boardWrapperRef}>
-                  <Chessboard
-                    id={displayedBoardId}
-                    position={displayedFen}
-                    onPieceDrop={handleDrop}
-                    onSquareClick={handleSquareClick}
-                    arePiecesDraggable={stage === "recall"}
-                    boardWidth={boardWidth}
-                    customBoardStyle={boardStyle}
-                    customSquareStyles={customSquareStyles}
-                    customDarkSquareStyle={{ backgroundColor: "#9b7d59" }}
-                    customLightSquareStyle={{ backgroundColor: "#f2dfc4" }}
-                  />
-                </div>
+                <ChessboardPanel
+                  boardId={displayedBoardId}
+                  position={displayedFen}
+                  onDrop={handleDrop}
+                  onSquareClick={handleSquareClick}
+                  onPieceDragBegin={handlePieceDragBegin}
+                  onPieceDragEnd={handlePieceDragEnd}
+                  onPromotionCheck={onPromotionCheck}
+                  arePiecesDraggable={stage === "recall"}
+                  isDraggablePiece={isDraggablePiece}
+                  customBoardStyle={boardStyle}
+                  customSquareStyles={isSolutionTab ? undefined : customSquareStyles}
+                />
               </div>
             </div>
           </>
@@ -438,12 +337,3 @@ export function ExercisePlayer({
     </div>
   );
 }
-
-
-
-
-
-
-
-
-

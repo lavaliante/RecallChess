@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test:board": "node --experimental-strip-types scripts/recall-board.test.mts",
     "validate:exercises": "node scripts/validate-exercises.js"
   },
   "dependencies": {

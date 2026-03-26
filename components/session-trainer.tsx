@@ -1,17 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Chess } from "chess.js";
-import { Chessboard } from "react-chessboard";
 import { SoundButton } from "@/components/sound-button";
 import { SoundLink } from "@/components/sound-link";
 import { SoundToggle } from "@/components/sound-toggle";
 import { useSound } from "@/components/sound-provider";
+import { ChessboardPanel } from "@/components/chessboard-panel";
 import {
   formatMovePairs,
   getExpectedFenFromMoves,
   normalizeFenForComparison,
 } from "@/lib/chess";
+import { useRecallBoard } from "@/lib/use-recall-board";
 import { addSessionHistoryRecord } from "@/lib/session-history";
 import type { Exercise, SessionExerciseSnapshot } from "@/lib/types";
 
@@ -32,7 +32,6 @@ type SessionSummary = {
   totalMoveCount: number;
 };
 
-const INITIAL_FEN = new Chess().fen();
 const RESULT_DELAY_MS = 1200;
 
 function getMemorizationTimeSeconds(difficulty: string, halfMoves: number): number {
@@ -89,10 +88,7 @@ export function SessionTrainer({
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const currentExercise = shuffledExercises[currentExerciseIndex];
   const [stage, setStage] = useState<ExerciseStage>("notation");
-  const [game, setGame] = useState(() => new Chess());
-  const [currentFen, setCurrentFen] = useState(INITIAL_FEN);
   const [isCurrentCorrect, setIsCurrentCorrect] = useState<boolean | null>(null);
-  const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
   const [notationSecondsLeft, setNotationSecondsLeft] = useState(() =>
     getMemorizationTimeSeconds(currentExercise.difficulty, currentExercise.moves.length),
   );
@@ -108,8 +104,6 @@ export function SessionTrainer({
   });
   const [sessionEnded, setSessionEnded] = useState(false);
   const [endedBecausePoolFinished, setEndedBecausePoolFinished] = useState(false);
-  const boardWrapperRef = useRef<HTMLDivElement | null>(null);
-  const [boardWidth, setBoardWidth] = useState(320);
   const sessionDeadlineRef = useRef<number | null>(null);
   const currentExerciseRef = useRef(currentExercise);
   const currentExerciseCheckedRef = useRef(false);
@@ -129,6 +123,22 @@ export function SessionTrainer({
     [currentExercise.moves],
   );
 
+  const {
+    currentFen,
+    customSquareStyles,
+    handleDrop,
+    handlePieceDragBegin,
+    handlePieceDragEnd,
+    handleSquareClick,
+    isDraggablePiece,
+    onPromotionCheck,
+    resetBoard,
+  } = useRecallBoard({
+    moves: currentExercise.moves,
+    enabled: !sessionEnded && stage === "recall",
+    onLegalMove: playMove,
+  });
+
   useEffect(() => {
     currentExerciseRef.current = currentExercise;
   }, [currentExercise]);
@@ -144,15 +154,11 @@ export function SessionTrainer({
   const loadExerciseByIndex = useCallback(
     (exerciseIndex: number) => {
       const exercise = shuffledExercises[exerciseIndex];
-      const freshGame = new Chess();
       currentExerciseRef.current = exercise;
       currentExerciseCheckedRef.current = false;
       setCurrentExerciseIndex(exerciseIndex);
-      setGame(freshGame);
-      setCurrentFen(freshGame.fen());
       setStage("notation");
       setIsCurrentCorrect(null);
-      setSelectedSquare(null);
       setNotationSecondsLeft(
         getMemorizationTimeSeconds(exercise.difficulty, exercise.moves.length),
       );
@@ -262,29 +268,6 @@ export function SessionTrainer({
   }, [notationSecondsLeft, sessionEnded, stage]);
 
   useEffect(() => {
-    if (sessionEnded || stage === "notation") {
-      return;
-    }
-
-    const element = boardWrapperRef.current;
-
-    if (!element) {
-      return;
-    }
-
-    const updateBoardWidth = () => {
-      setBoardWidth(Math.min(element.offsetWidth, 560));
-    };
-
-    updateBoardWidth();
-
-    const observer = new ResizeObserver(updateBoardWidth);
-    observer.observe(element);
-
-    return () => observer.disconnect();
-  }, [currentExercise.id, sessionEnded, stage]);
-
-  useEffect(() => {
     if (sessionEnded || stage !== "result") {
       return;
     }
@@ -348,81 +331,12 @@ export function SessionTrainer({
     };
   }, []);
 
-  const isOwnPieceSquare = (piece?: string) => {
-    if (!piece) {
-      return false;
-    }
-
-    return piece.charAt(0) === game.turn();
-  };
-
-  const tryMove = (sourceSquare: string, targetSquare: string) => {
-    const moveIndex = game.history().length;
-
-    if (moveIndex >= currentExercise.moves.length) {
-      return false;
-    }
-
-    const nextGame = new Chess(game.fen());
-    const move = nextGame.move({
-      from: sourceSquare,
-      to: targetSquare,
-      promotion: "q",
-    });
-
-    if (!move) {
-      return false;
-    }
-
-    setGame(nextGame);
-    setCurrentFen(nextGame.fen());
-    setSelectedSquare(null);
-    playMove();
-    return true;
-  };
-
-  const handleDrop = (sourceSquare: string, targetSquare: string) => {
-    if (sessionEnded || stage !== "recall") {
-      return false;
-    }
-
-    return tryMove(sourceSquare, targetSquare);
-  };
-
-  const handleSquareClick = (square: string, piece?: string) => {
-    if (sessionEnded || stage !== "recall") {
-      return;
-    }
-
-    if (selectedSquare) {
-      if (selectedSquare === square) {
-        setSelectedSquare(null);
-        return;
-      }
-
-      if (tryMove(selectedSquare, square)) {
-        return;
-      }
-    }
-
-    if (isOwnPieceSquare(piece)) {
-      setSelectedSquare(square);
-      return;
-    }
-
-    setSelectedSquare(null);
-  };
-
   const startRecallEarly = () => {
     setStage("recall");
-    setSelectedSquare(null);
   };
 
-  const resetBoard = () => {
-    const freshGame = new Chess();
-    setGame(freshGame);
-    setCurrentFen(freshGame.fen());
-    setSelectedSquare(null);
+  const resetSessionBoard = () => {
+    resetBoard();
   };
 
   const checkResult = () => {
@@ -432,7 +346,6 @@ export function SessionTrainer({
 
     setIsCurrentCorrect(didMatch);
     setStage("result");
-    setSelectedSquare(null);
     finishExercise(didMatch ? "correct" : "wrong");
 
     if (didMatch) {
@@ -447,14 +360,6 @@ export function SessionTrainer({
   const averageMoveCount =
     summary.attempted === 0 ? 0 : summary.totalMoveCount / summary.attempted;
   const stageIndex = stage === "notation" ? 0 : stage === "recall" ? 1 : 2;
-  const customSquareStyles =
-    stage === "recall" && selectedSquare
-      ? {
-          [selectedSquare]: {
-            boxShadow: "inset 0 0 0 4px rgba(34, 84, 61, 0.55)",
-          },
-        }
-      : undefined;
 
   if (sessionEnded) {
     return (
@@ -593,19 +498,18 @@ export function SessionTrainer({
             ) : null}
             <div className="training-stage board-stage">
               <div className="stage-box-content board-box-content">
-                <div className="board-wrapper" ref={boardWrapperRef}>
-                  <Chessboard
-                    id={`session-${currentExercise.id}`}
-                    position={currentFen}
-                    onPieceDrop={handleDrop}
-                    onSquareClick={handleSquareClick}
-                    arePiecesDraggable={stage === "recall"}
-                    boardWidth={boardWidth}
-                    customSquareStyles={customSquareStyles}
-                    customDarkSquareStyle={{ backgroundColor: "#9b7d59" }}
-                    customLightSquareStyle={{ backgroundColor: "#f2dfc4" }}
-                  />
-                </div>
+                <ChessboardPanel
+                  boardId={`session-${currentExercise.id}`}
+                  position={currentFen}
+                  onDrop={handleDrop}
+                  onSquareClick={handleSquareClick}
+                  onPieceDragBegin={handlePieceDragBegin}
+                  onPieceDragEnd={handlePieceDragEnd}
+                  onPromotionCheck={onPromotionCheck}
+                  arePiecesDraggable={stage === "recall"}
+                  isDraggablePiece={isDraggablePiece}
+                  customSquareStyles={customSquareStyles}
+                />
               </div>
             </div>
           </>
@@ -630,7 +534,7 @@ export function SessionTrainer({
               >
                 Check
               </SoundButton>
-              <SoundButton className="button-secondary" onClick={resetBoard} type="button">
+              <SoundButton className="button-secondary" onClick={resetSessionBoard} type="button">
                 Reset
               </SoundButton>
             </>
@@ -640,12 +544,3 @@ export function SessionTrainer({
     </div>
   );
 }
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,16 @@
-import { Chess } from "chess.js";
+import { Chess, type Color, type PieceSymbol, type Square } from "chess.js";
+
+export const INITIAL_FEN = new Chess().fen();
+
+export type ExpectedMove = {
+  color: Color;
+  from: Square;
+  to: Square;
+  piece: PieceSymbol;
+  promotion?: PieceSymbol;
+  san: string;
+  fenAfter: string;
+};
 
 export function getExpectedFenFromMoves(moves: string[]): string {
   const chess = new Chess();
@@ -25,4 +37,47 @@ export function formatMovePairs(moves: string[]): string[] {
   }
 
   return pairs;
+}
+
+export function getExpectedMoveSequence(moves: string[]): ExpectedMove[] {
+  const chess = new Chess();
+
+  return moves.map((moveSan) => {
+    const move = chess.move(moveSan, { strict: true });
+
+    return {
+      color: move.color,
+      from: move.from,
+      to: move.to,
+      piece: move.piece,
+      promotion: move.promotion,
+      san: move.san,
+      fenAfter: chess.fen(),
+    };
+  });
+}
+
+export function applyExpectedMoveAttempt(
+  chess: Chess,
+  expectedMoves: ExpectedMove[],
+  sourceSquare: string,
+  targetSquare: string,
+): boolean {
+  const pendingMove = expectedMoves[chess.history().length];
+
+  if (
+    !pendingMove ||
+    sourceSquare !== pendingMove.from ||
+    targetSquare !== pendingMove.to
+  ) {
+    return false;
+  }
+
+  const move = chess.move({
+    from: pendingMove.from,
+    to: pendingMove.to,
+    promotion: pendingMove.promotion,
+  });
+
+  return Boolean(move);
 }
