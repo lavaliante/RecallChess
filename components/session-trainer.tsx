@@ -367,7 +367,7 @@ export function SessionTrainer({
         <section className="panel exercise-header exercise-header-single">
           <div className="button-row exercise-topbar">
             <SoundLink href="/" className="button-ghost">
-              Back Home
+              Home
             </SoundLink>
             <SoundToggle />
           </div>
@@ -412,13 +412,13 @@ export function SessionTrainer({
 
           <div className="session-launcher-actions">
             <SoundLink className="button-primary difficulty-button" href="/">
-              Start Another Session
+              New Session
             </SoundLink>
             <SoundLink className="button-secondary difficulty-button" href="/history">
-              View History
+              History
             </SoundLink>
             <SoundLink className="button-ghost difficulty-button" href="/exercises">
-              Browse Exercise Library
+              Library
             </SoundLink>
           </div>
         </section>
@@ -431,7 +431,7 @@ export function SessionTrainer({
       <section className="panel exercise-header exercise-header-single">
         <div className="button-row exercise-topbar session-topbar">
           <SoundLink href="/" className="button-ghost">
-            End Session
+            End
           </SoundLink>
           <div className="session-hud">
             <span className="badge">{difficulty}</span>
@@ -444,32 +444,37 @@ export function SessionTrainer({
       </section>
 
       <section className="panel exercise-main-panel">
-        <div className="exercise-status-strip" aria-hidden="true">
-          {[
-            { label: "Notation", active: stageIndex === 0, done: stageIndex > 0 },
-            { label: "Recall", active: stageIndex === 1, done: stageIndex > 1 },
-            { label: "Result", active: stageIndex === 2, done: false },
-          ].map((item) => (
-            <span
-              className={`status-pill${item.active ? " active" : ""}${item.done ? " done" : ""}`}
-              key={item.label}
-            >
-              {item.label}
-            </span>
-          ))}
-        </div>
+        <div className="training-meta-bar training-meta-bar-session">
+          <div className="exercise-status-strip" aria-hidden="true">
+            {[
+              { label: "Notation", active: stageIndex === 0, done: stageIndex > 0 },
+              { label: "Recall", active: stageIndex === 1, done: stageIndex > 1 },
+              { label: "Result", active: stageIndex === 2, done: false },
+            ].map((item) => (
+              <span
+                className={`status-pill${item.active ? " active" : ""}${item.done ? " done" : ""}`}
+                key={item.label}
+              >
+                {item.label}
+              </span>
+            ))}
+          </div>
 
-        <div className="session-progress-strip">
-          <span className="badge">Attempted {summary.attempted}</span>
-          <span className="badge success">Correct {summary.correct}</span>
-          <span className="badge warning">Wrong {summary.wrong}</span>
+          <div className="session-progress-strip">
+            <span className="badge">Attempted {summary.attempted}</span>
+            <span className="badge success">Correct {summary.correct}</span>
+            <span className="badge warning">Wrong {summary.wrong}</span>
+          </div>
+
+          {stage === "notation" ? (
+            <div className="countdown-row training-meta-side">
+              <span className="badge timer-badge">Memorize {notationSecondsLeft}s</span>
+            </div>
+          ) : null}
         </div>
 
         {stage === "notation" ? (
           <>
-            <div className="countdown-row">
-              <span className="badge timer-badge">Memorize for {notationSecondsLeft}s</span>
-            </div>
             <div className="training-stage notation-stage">
               <div className="stage-box-content">
                 <div className="exercise-panel-heading in-box">
@@ -522,7 +527,7 @@ export function SessionTrainer({
               onClick={startRecallEarly}
               type="button"
             >
-              Start Recall
+              Recall
             </SoundButton>
           ) : null}
           {stage === "recall" ? (

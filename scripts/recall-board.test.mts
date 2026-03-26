@@ -55,14 +55,12 @@ function createBoardHarness(moves: string[]) {
 function run() {
   const board = createBoardHarness(["e4", "e5", "Nf3"]);
 
-  assert.equal(board.attemptMove("g1", "f3"), false);
-  assert.equal(board.getDisplayedFen(), INITIAL_FEN);
-
-  assert.equal(board.attemptMove("e2", "e4"), true);
+  assert.equal(board.attemptMove("g1", "f3"), true);
+  assert.notEqual(board.getDisplayedFen(), INITIAL_FEN);
   assert.equal(board.getHistory().length, 1);
 
-  assert.equal(board.attemptMove("b8", "c6"), false);
-  assert.equal(board.getHistory().length, 1);
+  assert.equal(board.attemptMove("b8", "c6"), true);
+  assert.equal(board.getHistory().length, 2);
 
   board.reset();
   assert.equal(board.getDisplayedFen(), INITIAL_FEN);
@@ -78,7 +76,10 @@ function run() {
 
   board.loadExercise(["d4", "d5", "c4"]);
   assert.equal(board.getDisplayedFen(), INITIAL_FEN);
-  assert.equal(board.attemptMove("e2", "e4"), false);
+  assert.equal(board.attemptMove("e2", "e4"), true);
+  assert.equal(board.getHistory().length, 1);
+
+  board.loadExercise(["d4", "d5", "c4"]);
   assert.equal(board.attemptMove("d2", "d4"), true);
   assert.equal(board.attemptMove("d7", "d5"), true);
   assert.equal(board.attemptMove("c2", "c4"), true);
@@ -103,6 +104,7 @@ function run() {
   console.log("Checklist:");
   console.log("- legal move keeps displayed FEN synced");
   console.log("- illegal move snaps back with no FEN drift");
+  console.log("- legal but wrong move still updates board state cleanly");
   console.log("- reset returns both states to start position");
   console.log("- retry-ready reset clears history cleanly");
   console.log("- exercise transition reloads a clean start board");

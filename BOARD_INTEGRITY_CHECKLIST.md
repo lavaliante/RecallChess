@@ -25,7 +25,7 @@ Check these in both an individual exercise and a timed session.
 
 ### Desktop
 - make the correct first move and confirm the piece moves once
-- try a legal but wrong move and confirm the piece snaps back immediately
+- try a legal but wrong move and confirm the move is allowed and the board stays synced
 - try dragging an opponent piece and confirm it cannot be moved
 - press `Reset` and confirm the board returns to the starting position
 - finish incorrectly, press `Retry`, and confirm the board starts clean
@@ -34,8 +34,8 @@ Check these in both an individual exercise and a timed session.
 ### Mobile / Touch
 - confirm the board shows tap-first interaction guidance
 - tap the correct source piece, then tap the target square, and confirm the move executes once
-- tap the wrong piece and confirm nothing moves
-- tap the correct piece, then a wrong target square, and confirm no board drift or random move happens
+- tap a movable but wrong piece and confirm you can still play it legally
+- tap a piece, then an illegal target square, and confirm no board drift or random move happens
 - attempt small accidental drags and confirm pieces do not enter confusing drag states
 - confirm illegal moves never leave the piece stranded between squares
 - verify notation -> recall, result -> retry/next, reset, and session transitions all leave the board in a valid state

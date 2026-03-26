@@ -66,17 +66,21 @@ export function useRecallBoard({
     return expectedMoves[chessRef.current.history().length] ?? null;
   }, [expectedMoves]);
 
-  const isSelectableSource = useCallback(
+  const canMoveFromSquare = useCallback(
     (square: string, piece?: string) => {
-      const pendingMove = getPendingMove();
-
-      if (!enabled || !pendingMove || square !== pendingMove.from || !piece) {
+      if (!enabled || !piece) {
         return false;
       }
 
-      return piece.charAt(0) === pendingMove.color;
+      const squarePiece = chessRef.current.get(square as Square);
+
+      if (!squarePiece || squarePiece.color !== chessRef.current.turn()) {
+        return false;
+      }
+
+      return chessRef.current.moves({ square: square as Square, verbose: true }).length > 0;
     },
-    [enabled, getPendingMove],
+    [enabled],
   );
 
   const attemptMove = useCallback(
@@ -139,42 +143,41 @@ export function useRecallBoard({
           return;
         }
 
-        if (selectedSquare === pendingMove.from && square === pendingMove.to) {
-          attemptMove(selectedSquare, square);
+        if (attemptMove(selectedSquare, square)) {
           return;
         }
 
-        if (isSelectableSource(square, piece)) {
-          setSelectedSquare(pendingMove.from);
+        if (canMoveFromSquare(square, piece)) {
+          setSelectedSquare(square as Square);
+          return;
         }
 
+        setSelectedSquare(null);
         return;
       }
 
-      if (isSelectableSource(square, piece)) {
-        setSelectedSquare(pendingMove.from);
+      if (canMoveFromSquare(square, piece)) {
+        setSelectedSquare(square as Square);
         return;
       }
 
       setSelectedSquare(null);
     },
-    [attemptMove, enabled, getPendingMove, isSelectableSource, selectedSquare],
+    [attemptMove, canMoveFromSquare, enabled, getPendingMove, selectedSquare],
   );
 
   const handlePieceDragBegin = useCallback(
-    (_piece: string, sourceSquare: string) => {
+    (piece: string, sourceSquare: string) => {
       if (!enabled) {
         return;
       }
 
-      const pendingMove = getPendingMove();
-
-      if (pendingMove && sourceSquare === pendingMove.from) {
-        setDragSourceSquare(pendingMove.from);
-        setSelectedSquare(pendingMove.from);
+      if (canMoveFromSquare(sourceSquare, piece)) {
+        setDragSourceSquare(sourceSquare as Square);
+        setSelectedSquare(sourceSquare as Square);
       }
     },
-    [enabled, getPendingMove],
+    [canMoveFromSquare, enabled],
   );
 
   const handlePieceDragEnd = useCallback(() => {
@@ -183,9 +186,9 @@ export function useRecallBoard({
 
   const isDraggablePiece = useCallback(
     ({ piece, sourceSquare }: DraggablePieceArgs) => {
-      return isSelectableSource(sourceSquare, piece);
+      return canMoveFromSquare(sourceSquare, piece);
     },
-    [isSelectableSource],
+    [canMoveFromSquare],
   );
 
   const pendingMove = getPendingMove();

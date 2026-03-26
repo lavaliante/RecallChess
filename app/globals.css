@@ -859,3 +859,541 @@ button:disabled,
   height: 1.2rem;
   display: block;
 }
+
+
+.training-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem 0.75rem;
+}
+
+.training-meta-bar-session {
+  align-items: flex-start;
+}
+
+.training-meta-side {
+  margin-left: auto;
+}
+
+.primary-link,
+.button-primary,
+.button-secondary,
+.button-ghost,
+.button-danger,
+.option-button,
+.status-pill,
+.badge {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .page-shell {
+    width: min(100% - 0.75rem, 1120px);
+    padding: 0.65rem 0 1rem;
+  }
+
+  .hero-card,
+  .panel,
+  .progress-card {
+    border-radius: 18px;
+  }
+
+  .hero-card,
+  .panel {
+    padding: 0.8rem;
+  }
+
+  .hero-card {
+    margin-bottom: 0.85rem;
+  }
+
+  .hero-card h1,
+  .section-heading h2,
+  .exercise-header h1,
+  .exercise-panel-heading h1 {
+    font-size: clamp(1.6rem, 7vw, 2.25rem);
+    line-height: 0.98;
+  }
+
+  .hero-copy,
+  .section-heading p,
+  .panel-copy,
+  .card-copy,
+  .result-copy,
+  .button-note,
+  .notation-line,
+  .search-meta {
+    font-size: 0.92rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.3rem;
+    font-size: 0.72rem;
+  }
+
+  .primary-link,
+  .button-primary,
+  .button-secondary,
+  .button-ghost,
+  .button-danger {
+    min-height: 40px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.92rem;
+  }
+
+  .badge {
+    min-height: 26px;
+    padding: 0.1rem 0.55rem;
+    font-size: 0.78rem;
+  }
+
+  .status-pill {
+    min-height: 28px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.76rem;
+  }
+
+  .button-row,
+  .status-row,
+  .quick-start-topbar,
+  .browse-topbar,
+  .exercise-topbar,
+  .training-actions,
+  .countdown-row,
+  .exercise-status-strip,
+  .session-hud,
+  .session-progress-strip,
+  .session-summary-meta,
+  .search-toolbar,
+  .history-card-top,
+  .history-exercise-item,
+  .history-actions {
+    gap: 0.45rem;
+  }
+
+  .section-block {
+    margin-top: 0.85rem;
+  }
+
+  .section-heading {
+    margin-bottom: 0.7rem;
+  }
+
+  .exercise-grid,
+  .history-list,
+  .history-detail-grid,
+  .history-exercise-list {
+    gap: 0.75rem;
+  }
+
+  .exercise-card,
+  .history-card,
+  .history-detail-list {
+    gap: 0.7rem;
+  }
+
+  .quick-start-card {
+    padding: 1rem;
+    gap: 0.95rem;
+  }
+
+  .quick-start-copy {
+    font-size: 0.94rem;
+  }
+
+  .option-grid-three {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .option-button {
+    min-height: 46px;
+    padding: 0.5rem 0.35rem;
+    border-radius: 14px;
+    font-size: 0.82rem;
+    letter-spacing: -0.01em;
+  }
+
+  .difficulty-button {
+    min-height: 46px;
+    font-size: 0.94rem;
+  }
+
+  .session-launcher-actions {
+    gap: 0.55rem;
+  }
+
+  .secondary-link {
+    width: 100%;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .exercise-flow {
+    gap: 0.55rem;
+  }
+
+  .exercise-header,
+  .exercise-header-single,
+  .exercise-panel-heading {
+    gap: 0.45rem;
+  }
+
+  .exercise-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .session-topbar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .session-hud {
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    order: initial;
+  }
+
+  .exercise-main-panel {
+    gap: 0.7rem;
+    padding: 0.8rem;
+  }
+
+  .exercise-status-strip {
+    flex: 1 1 0;
+    justify-content: flex-start;
+  }
+
+  .countdown-row {
+    justify-content: flex-start;
+  }
+
+  .training-stage,
+  .notation-stage,
+  .board-stage {
+    min-height: 0;
+  }
+
+  .notation-stage,
+  .board-stage {
+    padding: 0.65rem;
+    border-radius: 16px;
+  }
+
+  .stage-box-content {
+    gap: 0.65rem;
+  }
+
+  .board-box-content {
+    gap: 0.5rem;
+  }
+
+  .notation-lines {
+    gap: 0.25rem;
+  }
+
+  .notation-line {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .result-banner {
+    padding: 0.6rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.92rem;
+  }
+
+  .board-shell {
+    gap: 0.4rem;
+  }
+
+  .board-wrapper {
+    max-width: min(100vw - 1.9rem, 560px);
+  }
+
+  .board-interaction-note {
+    min-height: 1rem;
+    font-size: 0.76rem;
+  }
+
+  .training-actions-fixed {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    justify-content: stretch;
+    align-items: stretch;
+  }
+
+  .training-actions-fixed > * {
+    min-width: 0;
+  }
+
+  .training-actions-fixed > :only-child {
+    grid-column: 1 / -1;
+  }
+
+  .training-primary,
+  .training-actions-fixed .button-secondary,
+  .training-actions-fixed .button-ghost {
+    width: auto;
+  }
+
+  .training-primary {
+    min-width: 0;
+  }
+
+  .session-summary-panel {
+    gap: 0.8rem;
+    padding: 0.95rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .summary-grid > div {
+    padding: 0.75rem;
+    border-radius: 14px;
+  }
+
+  .summary-grid strong {
+    font-size: 1.2rem;
+  }
+
+  .searchbox {
+    width: 100%;
+    min-height: 42px;
+    padding: 0.7rem 0.85rem;
+  }
+
+  .search-clear {
+    min-height: 32px;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .history-summary-grid {
+    margin-top: 0.85rem;
+  }
+
+  .history-exercise-item {
+    padding: 0.75rem 0.8rem;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-shell {
+    width: min(100% - 0.5rem, 1120px);
+    padding-top: 0.4rem;
+  }
+
+  .hero-card,
+  .panel {
+    padding: 0.7rem;
+  }
+
+  .browse-topbar {
+    align-items: flex-start;
+  }
+
+  .exercise-topbar,
+  .session-topbar {
+    gap: 0.4rem;
+  }
+
+  .exercise-main-panel {
+    padding: 0.7rem;
+  }
+
+  .training-meta-bar {
+    gap: 0.4rem;
+  }
+
+  .training-meta-side {
+    margin-left: 0;
+  }
+
+  .exercise-status-strip,
+  .session-progress-strip,
+  .session-summary-meta,
+  .session-hud,
+  .search-toolbar,
+  .history-card-top,
+  .history-actions,
+  .history-exercise-item {
+    width: 100%;
+  }
+
+  .session-topbar .button-ghost,
+  .exercise-topbar .button-ghost,
+  .browse-topbar .button-ghost,
+  .browse-topbar .button-secondary {
+    padding-inline: 0.75rem;
+  }
+
+  .stage-box-content {
+    gap: 0.55rem;
+  }
+
+  .exercise-panel-heading.in-box.compact h1,
+  .exercise-panel-heading.in-box h1 {
+    font-size: clamp(1.25rem, 7vw, 1.65rem);
+  }
+
+  .exercise-meta-row {
+    justify-content: center;
+  }
+
+  .board-wrapper {
+    max-width: min(100vw - 1.45rem, 560px);
+  }
+
+  .training-actions-fixed {
+    grid-template-columns: minmax(0, 1fr) minmax(88px, auto);
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .primary-link,
+  .button-primary,
+  .button-secondary,
+  .button-ghost,
+  .button-danger {
+    padding: 0.55rem 0.72rem;
+    font-size: 0.88rem;
+  }
+
+  .option-button {
+    font-size: 0.76rem;
+  }
+
+  .status-pill {
+    padding-inline: 0.5rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 560px) {
+  .page-shell {
+    padding-bottom: 0.75rem;
+  }
+
+  .hero-card,
+  .panel {
+    border-radius: 16px;
+    padding: 0.6rem;
+  }
+
+  .exercise-flow {
+    gap: 0.4rem;
+  }
+
+  .exercise-header,
+  .exercise-header-single {
+    padding: 0.55rem 0.6rem;
+  }
+
+  .exercise-main-panel {
+    gap: 0.55rem;
+    padding: 0.6rem;
+  }
+
+  .training-meta-bar {
+    gap: 0.3rem 0.45rem;
+  }
+
+  .exercise-status-strip,
+  .session-progress-strip {
+    gap: 0.3rem;
+  }
+
+  .status-pill,
+  .badge {
+    font-size: 0.74rem;
+  }
+
+  .notation-stage,
+  .board-stage {
+    padding: 0.5rem;
+  }
+
+  .stage-box-content,
+  .board-box-content {
+    gap: 0.4rem;
+  }
+
+  .exercise-panel-heading.in-box {
+    gap: 0.3rem;
+  }
+
+  .exercise-panel-heading.in-box .eyebrow {
+    margin-bottom: 0.15rem;
+  }
+
+  .exercise-meta-row {
+    gap: 0.35rem;
+  }
+
+  .notation-lines {
+    gap: 0.18rem;
+  }
+
+  .notation-line {
+    font-size: 0.9rem;
+    line-height: 1.28;
+  }
+
+  .board-shell {
+    gap: 0.25rem;
+  }
+
+  .board-interaction-note {
+    min-height: 0;
+    font-size: 0.72rem;
+  }
+
+  .training-actions-fixed {
+    gap: 0.4rem;
+  }
+
+  .training-actions-fixed .button-primary,
+  .training-actions-fixed .button-secondary,
+  .training-actions-fixed .button-ghost {
+    min-height: 38px;
+    padding-inline: 0.7rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .exercise-topbar,
+  .session-topbar {
+    grid-template-columns: auto auto;
+  }
+
+  .session-hud {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+
+  .status-pill,
+  .badge {
+    font-size: 0.72rem;
+  }
+
+  .training-actions-fixed {
+    grid-template-columns: minmax(0, 1fr) minmax(78px, auto);
+  }
+}

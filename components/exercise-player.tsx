@@ -192,7 +192,7 @@ export function ExercisePlayer({
   };
 
   const primaryLabel =
-    stage === "notation" ? "Start Recall" : stage === "recall" ? "Check" : isCorrect ? "Next" : "Retry";
+    stage === "notation" ? "Recall" : stage === "recall" ? "Check" : isCorrect ? "Next" : "Retry";
 
   const statusItems = [
     {
@@ -237,41 +237,44 @@ export function ExercisePlayer({
       <section className="panel exercise-header exercise-header-single">
         <div className="button-row exercise-topbar">
           <SoundLink href="/" className="button-ghost">
-            Back Home
+            Home
           </SoundLink>
           <SoundToggle />
         </div>
       </section>
 
       <section className="panel exercise-main-panel">
-        <div className="exercise-status-strip" aria-label="Exercise views">
-          {statusItems.map((item) => (
-            <button
-              aria-pressed={item.active}
-              className={`status-pill${item.active ? " active" : ""}${item.done ? " done" : ""}${item.clickable ? " interactive" : ""}`}
-              disabled={!item.clickable}
-              key={item.key}
-              onClick={item.onClick}
-              type="button"
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="training-meta-bar">
+          <div className="exercise-status-strip" aria-label="Exercise views">
+            {statusItems.map((item) => (
+              <button
+                aria-pressed={item.active}
+                className={`status-pill${item.active ? " active" : ""}${item.done ? " done" : ""}${item.clickable ? " interactive" : ""}`}
+                disabled={!item.clickable}
+                key={item.key}
+                onClick={item.onClick}
+                type="button"
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+
+          {stage === "notation" ? (
+            timedMemorization ? (
+              <div className="countdown-row training-meta-side">
+                <span className="badge timer-badge">Memorize {countdownSeconds}s</span>
+              </div>
+            ) : (
+              <div className="countdown-row training-meta-side">
+                <span className="badge timer-badge">Untimed</span>
+              </div>
+            )
+          ) : null}
         </div>
 
         {isNotationView ? (
           <>
-            {stage === "notation" ? (
-              timedMemorization ? (
-                <div className="countdown-row">
-                  <span className="badge timer-badge">Memorize for {countdownSeconds}s</span>
-                </div>
-              ) : (
-                <div className="countdown-row">
-                  <span className="badge timer-badge">Untimed practice</span>
-                </div>
-              )
-            ) : null}
             <div className="training-stage notation-stage">
               <div className="stage-box-content">
                 <div className="exercise-panel-heading in-box">

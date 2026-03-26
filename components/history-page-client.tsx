@@ -34,7 +34,7 @@ export function HistoryPageClient() {
           </SoundLink>
           <div className="button-row">
             <SoundLink className="button-secondary" href="/exercises">
-              Exercise Library
+              Library
             </SoundLink>
             <SoundToggle />
           </div>
@@ -102,7 +102,7 @@ export function HistoryPageClient() {
                 </div>
                 <div className="history-actions">
                   <SoundLink className="button-ghost" href={`/history/${session.id}`}>
-                    View Details
+                    Details
                   </SoundLink>
                   {session.wrongExerciseIds.length > 0 ? (
                     <SoundLink className="button-primary" href={`/review/${session.id}/0`}>

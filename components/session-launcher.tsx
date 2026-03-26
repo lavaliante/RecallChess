@@ -92,10 +92,10 @@ export function SessionLauncher({ availableDifficulties }: SessionLauncherProps)
           Start Session
         </SoundButton>
         <SoundLink className="button-secondary difficulty-button" href="/history">
-          Session History
+          History
         </SoundLink>
         <SoundLink className="secondary-link" href="/exercises">
-          Browse exercise library
+          Exercise library
         </SoundLink>
       </div>
     </section>

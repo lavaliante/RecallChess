@@ -64,20 +64,27 @@ export function applyExpectedMoveAttempt(
   targetSquare: string,
 ): boolean {
   const pendingMove = expectedMoves[chess.history().length];
+  const piece = chess.get(sourceSquare as Square);
+  const isPromotionMove =
+    piece?.type === "p" && (targetSquare.endsWith("1") || targetSquare.endsWith("8"));
+  const promotion =
+    pendingMove &&
+    sourceSquare === pendingMove.from &&
+    targetSquare === pendingMove.to
+      ? pendingMove.promotion
+      : isPromotionMove
+        ? "q"
+        : undefined;
 
-  if (
-    !pendingMove ||
-    sourceSquare !== pendingMove.from ||
-    targetSquare !== pendingMove.to
-  ) {
+  try {
+    const move = chess.move({
+      from: sourceSquare,
+      to: targetSquare,
+      ...(promotion ? { promotion } : {}),
+    });
+
+    return Boolean(move);
+  } catch {
     return false;
   }
-
-  const move = chess.move({
-    from: pendingMove.from,
-    to: pendingMove.to,
-    promotion: pendingMove.promotion,
-  });
-
-  return Boolean(move);
 }

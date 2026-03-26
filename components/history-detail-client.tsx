@@ -35,7 +35,7 @@ function renderExerciseList(title: string, items: SessionExerciseSnapshot[]) {
                 </p>
               </div>
               <SoundLink className="button-ghost" href={`/exercise/${exercise.id}`}>
-                Open Exercise
+                Open
               </SoundLink>
             </article>
           ))}
@@ -81,7 +81,7 @@ export function HistoryDetailClient({ sessionId }: HistoryDetailClientProps) {
           <div className="button-row">
             {wrongExercises.length > 0 ? (
               <SoundLink className="button-primary" href={`/review/${session.id}/0`}>
-                Review Mistakes
+                Review
               </SoundLink>
             ) : null}
             <SoundToggle />
