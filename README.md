@@ -50,3 +50,15 @@ npm run start
 - Progress only updates in the current browser because storage is local only.
 - The app checks the final position only; it does not verify whether the user reproduced the exact move order.
 - No audio files are included yet, so sounds are currently generated in code.
+
+
+## Vercel Analytics
+
+Vercel Web Analytics is enabled in this app using `@vercel/analytics` and the `Analytics` component in the root Next.js app layout.
+
+To see analytics data:
+- deploy the app to Vercel
+- open your project in the Vercel dashboard
+- go to the `Analytics` tab or the Web Analytics section for the project
+
+Local development will not show production analytics data. You may also need to enable Web Analytics for the project in the Vercel dashboard before data appears after deployment.

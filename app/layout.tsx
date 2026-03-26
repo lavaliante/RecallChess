@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { SoundProvider } from "@/components/sound-provider";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <SoundProvider>{children}</SoundProvider>
+        <Analytics />
       </body>
     </html>
   );
